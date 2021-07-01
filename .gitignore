@@ -24,7 +24,9 @@ hs_err_pid*
 
 # tools
 .idea/
+*.iml
 .gradle/
 
 # build
 build/
+target/
