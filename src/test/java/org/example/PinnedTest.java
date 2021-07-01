@@ -27,9 +27,23 @@ public class PinnedTest {
 
     @Test void testElementsAre4Digits() {
         Collection<String> failed = service.generate().stream()
-                .filter(pin -> pin.length() != 4)
+                .map(String::trim)
+                .filter(this::isNotFourDigit)
                 .collect(Collectors.toList());
-        assertTrue(failed.isEmpty(), "There are " + failed.size() + " pin numbers that are not 4-digit: " + failed.toString());
+        assertTrue(failed.isEmpty(), "There are " + failed.size() + " pin numbers that are not 4-digit: " + failed);
+    }
+
+    private boolean isNotFourDigit(String s) {
+        return s.length() != 4 || !isDigitsOnly(s);
+    }
+
+    private boolean isDigitsOnly(String s) {
+        try {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
 }
